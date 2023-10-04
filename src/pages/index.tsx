@@ -1,10 +1,38 @@
-import Image from "next/image";
 import Head from "next/head";
-import { Inter } from "next/font/google";
-import { Text, Box, Divider, Container, Button } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
+import {
+  Text,
+  Divider,
+  Container,
+  Button,
+  Card,
+  CardFooter,
+  CardHeader,
+  Heading,
+  CardBody,
+  Flex,
+} from "@chakra-ui/react";
+import Link from "next/link";
 
 export default function StartPage() {
+  // const [name, setName] = useState("");
+  // const [email, setEmail] = useState("");
+
+  // const handleNameChange = (e) => {
+  //   setName(e.target.value);
+  // };
+
+  // const handleEmailChange = (e) => {
+  //   setEmail(e.target.value);
+  // };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Do something with the name and email values
+  //   console.log("Name:", name);
+  //   console.log("Email:", email);
+  // };
+
   return (
     <>
       <Head>
@@ -14,16 +42,25 @@ export default function StartPage() {
 
       {/* main component*/}
       <Container>
-        <Box>
-          {/* HEADER */}
-          {/* if given letak if not no need */}
-          {/* CONTENT AREA */}
-
-          {/* BUTTON AREA */}
-          <Text></Text>
-          <Divider orientation="horizontal" />
-          <Button>Start Quiz</Button>
-        </Box>
+        <Flex justifyContent="center" alignItems="center" minHeight="100vh">
+          <Card align="center">
+            <CardHeader>
+              <Heading size="md">Welcome to the Flux Quiz!</Heading>
+            </CardHeader>
+            <CardBody>
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </Text>
+            </CardBody>
+            <Divider orientation="horizontal" />
+            <CardFooter>
+              <Link href="/questions">
+                <Button colorScheme="blue">Start Quiz</Button>
+              </Link>
+            </CardFooter>
+          </Card>
+        </Flex>
       </Container>
     </>
   );
