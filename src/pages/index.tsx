@@ -1,5 +1,6 @@
 import Head from "next/head";
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import {
   Text,
   Divider,
@@ -12,26 +13,14 @@ import {
   CardBody,
   Flex,
 } from "@chakra-ui/react";
-import Link from "next/link";
+import ResultPage from "./ResultPage";
 
 export default function StartPage() {
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
+  const router = useRouter();
 
-  // const handleNameChange = (e) => {
-  //   setName(e.target.value);
-  // };
-
-  // const handleEmailChange = (e) => {
-  //   setEmail(e.target.value);
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Do something with the name and email values
-  //   console.log("Name:", name);
-  //   console.log("Email:", email);
-  // };
+  const handleGoToQuestionCard = () => {
+    router.push("/QuestionCard"); // Replace "/result" with the path of the result page
+  };
 
   return (
     <>
@@ -41,27 +30,26 @@ export default function StartPage() {
       </Head>
 
       {/* main component*/}
-      <Container>
-        <Flex justifyContent="center" alignItems="center" minHeight="100vh">
-          <Card align="center">
-            <CardHeader>
-              <Heading size="md">Welcome to the Flux Quiz!</Heading>
-            </CardHeader>
-            <CardBody>
-              <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Text>
-            </CardBody>
-            <Divider orientation="horizontal" />
-            <CardFooter>
-              <Link href="/questions">
-                <Button colorScheme="blue">Start Quiz</Button>
-              </Link>
-            </CardFooter>
-          </Card>
-        </Flex>
-      </Container>
+
+      <Flex justifyContent="center" alignItems="center" minHeight="100vh">
+        <Card align="center">
+          <CardHeader>
+            <Heading size="md">Welcome to the Flux Quiz!</Heading>
+          </CardHeader>
+          <CardBody>
+            <Text>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </Text>
+          </CardBody>
+          <Divider orientation="horizontal" my={4} />
+          <CardFooter>
+            <Button colorScheme="blue" onClick={handleGoToQuestionCard}>
+              Start Quiz
+            </Button>
+          </CardFooter>
+        </Card>
+      </Flex>
     </>
   );
 }
