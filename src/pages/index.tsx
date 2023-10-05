@@ -23,28 +23,32 @@ export default function StartPage() {
 
   return (
     <>
-      <Head>
-        <title>Flux Quiz App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       {/* main component*/}
 
       <Flex justifyContent="center" alignItems="center" minHeight="100vh">
         <Card align="center">
           <CardHeader>
-            <Heading size="md">Welcome to the Flux Quiz!</Heading>
+            <Heading> How Good is Your General Knowledge?</Heading>
           </CardHeader>
-          <CardBody>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <CardBody pb="15px">
+            <Text fontSize="lg">
+              In this quiz, test your general knowledge to see if you are as
+              knowledgeable as you think you are!
             </Text>
+            <br />
+            <Divider orientation="horizontal" />
           </CardBody>
-          <Divider orientation="horizontal" my={4} />
-          <CardFooter>
-            <Button colorScheme="blue" onClick={handleGoToQuestionCard}>
-              Start Quiz
+          <CardFooter pt="0">
+            <Button
+              background="black"
+              color="white"
+              borderRadius="0"
+              size="lg"
+              w="150px"
+              m="2"
+              onClick={handleGoToQuestionCard}
+            >
+              START QUIZ
             </Button>
           </CardFooter>
         </Card>
