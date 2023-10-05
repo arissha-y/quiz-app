@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 
 const ResultPage = () => {
   const router = useRouter();
+  const { quizPoints, numQuestions } = router.query;
 
   const handleRestart = () => {
     router.push("/");
@@ -27,8 +28,7 @@ const ResultPage = () => {
         </CardHeader>
         <CardBody>
           <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            You scored {quizPoints} out of {numQuestions} points!
           </Text>
         </CardBody>
         <Divider orientation="horizontal" my={4} />

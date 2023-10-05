@@ -1,0 +1,11 @@
+- figure out the list of questions
+- check out the point system 
+- create a bar to show user progress
+- look into the cookie system + make sure got associate with email and password
+
+- make sure the restart button will
+(1) go back to start page
+(2) clear cookies
+
+- make sure to design as closely as the example
+

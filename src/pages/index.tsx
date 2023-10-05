@@ -13,7 +13,6 @@ import {
   CardBody,
   Flex,
 } from "@chakra-ui/react";
-import ResultPage from "./ResultPage";
 
 export default function StartPage() {
   const router = useRouter();
