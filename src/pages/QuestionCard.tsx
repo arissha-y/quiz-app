@@ -24,7 +24,11 @@ import {
   Container,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import theme from "../theme"; // Import the custom theme
+import Cookies from "js-cookie";
+
+// console.log(Cookies.get("name"));
+
+// id, counter for cookies
 
 const questionList = [
   {
@@ -50,13 +54,13 @@ const questionList = [
     id: 4,
     question: "In what year did the Titanic sin?",
     answers: ["1931", "1923", "1905", "1912"],
-    correctAnswer: "1912", //
+    correctAnswer: "1912",
   },
   {
     id: 5,
     question: "What is the chemical symbol for gold?",
     answers: ["Fe", "Au", "Ag", "Pb"],
-    correctAnswer: "Au", //
+    correctAnswer: "Au",
   },
   {
     id: 6,
@@ -67,19 +71,19 @@ const questionList = [
       "Indian Ocean",
       "Southern Ocean",
     ],
-    correctAnswer: "Pacific Ocean", //
+    correctAnswer: "Pacific Ocean",
   },
   {
     id: 7,
     question: "In which year did the first manned moon landing occur?",
     answers: ["1959", "1965", "1969", "1973"],
-    correctAnswer: "1969", //
+    correctAnswer: "1969",
   },
   {
     id: 8,
     question: "Which country won the Fifa World Cup 2018?",
     answers: ["Brazil", "Germany", "Argentina", "France"],
-    correctAnswer: "France", //
+    correctAnswer: "France",
   },
   {
     id: 9,
@@ -90,19 +94,19 @@ const questionList = [
       "Charlotte Bronte",
       "Charles Dickens",
     ],
-    correctAnswer: "Jane Austen", //
+    correctAnswer: "Jane Austen",
   },
   {
     id: 10,
     question: "Which stadium is known as the `Theatre of Dreams`?",
     answers: ["Anfield", "Old Trafford", "Camp Nou", "Santiago Bernabeu"],
-    correctAnswer: "Old Trafford", //
+    correctAnswer: "Old Trafford",
   },
 ];
 
 const QuestionCard = () => {
   const [quizPoints, setQuizPoint] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(5);
   const [selectedOption, setSelectedOption] = useState("");
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -114,8 +118,6 @@ const QuestionCard = () => {
     );
 
     // if select the correct answer, counter + 1
-
-    console.log("selectedAnswer: " + selectedAnswer);
     if (selectedAnswer == undefined) {
       onOpen(); // Open the modal if no answer is selected
       return;
@@ -147,7 +149,6 @@ const QuestionCard = () => {
 
   const handleAnswer = (selectedAnswer: string) => {
     setSelectedOption(selectedAnswer);
-    console.log(selectedAnswer);
   };
 
   // ensure next button is enabled if any option is selected
