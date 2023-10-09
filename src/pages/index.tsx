@@ -28,7 +28,7 @@ export default function StartPage() {
       <Flex justifyContent="center" alignItems="center" minHeight="100vh">
         <Card align="center">
           <CardHeader>
-            <Heading> How Good is Your General Knowledge?</Heading>
+            <Heading>How Good is Your General Knowledge?</Heading>
           </CardHeader>
           <CardBody pb="15px">
             <Text fontSize="lg">

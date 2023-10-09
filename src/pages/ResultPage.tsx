@@ -22,18 +22,34 @@ const ResultPage = () => {
   };
   return (
     <Flex justifyContent="center" alignItems="center" minHeight="100vh">
-      <Card align="center">
+      <Card align="center" w="700px">
         <CardHeader>
           <Heading size="xl">Your Results are: </Heading>
         </CardHeader>
-        <CardBody>
-          <Text>
-            You scored {quizPoints} out of {numQuestions} points!
+        <CardBody w="100%">
+          <Text textAlign="center">
+            You scored{" "}
+            <Text as="span" fontWeight="bold">
+              {quizPoints}
+            </Text>{" "}
+            out of{" "}
+            <Text as="span" fontWeight="bold">
+              {numQuestions}
+            </Text>{" "}
+            points!
           </Text>
         </CardBody>
         <Divider orientation="horizontal" my={4} />
-        <CardFooter>
-          <Button colorScheme="blue" onClick={handleRestart}>
+        <CardFooter justifyContent="flex-end" width="100%" pt="0">
+          <Button
+            background={"black"}
+            color={"white"}
+            size="lg"
+            m={2}
+            w="150px"
+            borderRadius="0"
+            onClick={handleRestart}
+          >
             Restart
           </Button>
           {/* when restart is being clicked, go back to start page */}

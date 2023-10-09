@@ -13,8 +13,18 @@ import {
   RadioGroup,
   Divider,
   Stack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  Progress,
+  Container,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import theme from "../theme"; // Import the custom theme
 
 const questionList = [
   {
@@ -95,6 +105,7 @@ const QuestionCard = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
   const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleNextQuestion = () => {
     const currentQuestionObject = questionList[currentQuestion];
@@ -103,6 +114,12 @@ const QuestionCard = () => {
     );
 
     // if select the correct answer, counter + 1
+
+    console.log("selectedAnswer: " + selectedAnswer);
+    if (selectedAnswer == undefined) {
+      onOpen(); // Open the modal if no answer is selected
+      return;
+    }
     if (selectedAnswer === currentQuestionObject.correctAnswer) {
       setQuizPoint((currentPoints) => currentPoints + 1);
     }
@@ -136,68 +153,94 @@ const QuestionCard = () => {
   // ensure next button is enabled if any option is selected
   const isDisabled = selectedOption === "";
 
+  // user's progress
+  const userProgress = ((currentQuestion + 1) / questionList.length) * 100; // Calculate the progress percentage
+
   return (
-    <Flex justifyContent="center" alignItems="center" minHeight="100vh">
-      <Card align="center" w="700px">
-        <CardHeader w="100%" backgroundColor={"blue.100"}>
-          <Flex alignItems="flex-start">
-            <Text fontSize="lg" fontWeight="bold">
-              Q{questionList[currentQuestion].id}:
-            </Text>
-            <Text fontSize="lg" ml={4}>
-              {questionList[currentQuestion].question}
-            </Text>
-          </Flex>
-        </CardHeader>
+    <>
+      <Flex justifyContent="center" alignItems="center" minHeight="100vh">
+        <Flex direction="column" alignItems="center" w="700px">
+          <Progress value={userProgress} size="lg" w="100%" mb={4} />
+          <Card align="center" w="700px">
+            <CardHeader w="100%" backgroundColor={"blue.100"}>
+              <Flex alignItems="flex-start">
+                <Text fontSize="lg" fontWeight="bold">
+                  Q{questionList[currentQuestion].id}:
+                </Text>
+                <Text fontSize="lg" ml={4}>
+                  {questionList[currentQuestion].question}
+                </Text>
+              </Flex>
+            </CardHeader>
 
-        <CardBody w="100%" h="1000px">
-          <RadioGroup value={selectedOption} onChange={handleAnswer}>
-            <Stack direction="column" pb="15px">
-              {questionList[currentQuestion].answers.map((answer, index) => (
-                <Radio
-                  key={`${currentQuestion}-${index}`}
-                  value={answer}
-                  size="md"
+            <CardBody w="100%" h="1000px">
+              <RadioGroup value={selectedOption} onChange={handleAnswer}>
+                <Stack direction="column" pb="15px">
+                  {questionList[currentQuestion].answers.map(
+                    (answer, index) => (
+                      <Radio
+                        key={`${currentQuestion}-${index}`}
+                        value={answer}
+                        size="md"
+                        m={2}
+                      >
+                        {answer}
+                      </Radio>
+                    )
+                  )}
+                </Stack>
+              </RadioGroup>
+              <Divider orientation="horizontal" />
+            </CardBody>
+
+            <CardFooter justifyContent="flex-end" width="100%" pt="0">
+              <ButtonGroup>
+                <Button
+                  onClick={handlePreviousQuestion}
+                  disabled={currentQuestion === 0}
+                  colorScheme="black"
+                  variant="outline"
+                  size="lg"
                   m={2}
+                  w="150px"
+                  borderRadius="0"
                 >
-                  {answer}
-                </Radio>
-              ))}
-            </Stack>
-          </RadioGroup>
-          <Divider orientation="horizontal" />
-        </CardBody>
+                  BACK
+                </Button>
+                <Button
+                  onClick={handleNextQuestion}
+                  disabled={isDisabled}
+                  background={"black"}
+                  color={"white"}
+                  size="lg"
+                  m={2}
+                  w="150px"
+                  borderRadius="0"
+                >
+                  NEXT
+                </Button>
+              </ButtonGroup>
+            </CardFooter>
+          </Card>
+        </Flex>
+      </Flex>
 
-        <CardFooter justifyContent="flex-end" width="100%" pt="0">
-          <ButtonGroup>
-            <Button
-              onClick={handlePreviousQuestion}
-              disabled={currentQuestion === 0}
-              colorScheme="black"
-              variant="outline"
-              size="lg"
-              m={2}
-              w="150px"
-              borderRadius="0"
-            >
-              BACK
+      {/* Modal for selecting an answer */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>No Answer Selected</ModalHeader>
+          <ModalBody>
+            <Text>Please select an answer to proceed.</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" onClick={onClose}>
+              OK
             </Button>
-            <Button
-              onClick={handleNextQuestion}
-              disabled={isDisabled}
-              background={"black"}
-              color={"white"}
-              size="lg"
-              m={2}
-              w="150px"
-              borderRadius="0"
-            >
-              NEXT
-            </Button>
-          </ButtonGroup>
-        </CardFooter>
-      </Card>
-    </Flex>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 
