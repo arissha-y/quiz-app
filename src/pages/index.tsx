@@ -41,22 +41,6 @@ export default function StartPage() {
     }
   };
 
-  // const handleNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.value === "") {
-  //     console.log("got dedect");
-  //   } else {
-  //     setName(e.target.value);
-  //   }
-  // };
-
-  // const handleEmailInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.value === "") {
-  //     console.log("got dedect");
-  //   } else {
-  //     setEmail(e.target.value);
-  //   }
-  // };
-
   const isError = email === "" || name === "";
 
   return (
@@ -113,6 +97,7 @@ export default function StartPage() {
             <FormControl mt={4}>
               <FormLabel>Email: </FormLabel>
               <Input
+                type="email"
                 placeholder="Enter your email address"
                 value={email}
                 onChange={(e) => {

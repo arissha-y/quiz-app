@@ -106,7 +106,7 @@ const questionList = [
 
 const QuestionCard = () => {
   const [quizPoints, setQuizPoint] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState(5);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
