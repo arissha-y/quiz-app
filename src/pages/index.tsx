@@ -1,10 +1,8 @@
-import Head from "next/head";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import {
   Text,
   Divider,
-  Container,
   Button,
   Card,
   CardFooter,
@@ -22,26 +20,41 @@ import {
   FormControl,
   Input,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
 } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 
-// Cookies.set("name", "arissha");
-
 export default function StartPage() {
-  const [email, setEmail] = useState("");
+  const [cookieName, setCookieName] = useState(""); // Define cookieName using state
   const [name, setName] = useState("");
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  useEffect(() => {
+    checkCookies();
+  }, []);
+
   const handleGoToQuestionCard = () => {
     if (!isError) {
+      // if name is change, reset quizpoints and currentquestion
+      if (cookieName !== name) {
+        Cookies.set("quizPoints", "0");
+        Cookies.set("currentQuestion", "0");
+      }
+
+      Cookies.set("name", name);
       router.push("/QuestionCard"); // Replace "/result" with the path of the result page
     }
   };
 
-  const isError = email === "" || name === "";
+  const isError = name === "";
+
+  const checkCookies = () => {
+    const storedCookieName = Cookies.get("name"); // already saved
+
+    if (storedCookieName) {
+      setName(storedCookieName); //if value not "" show in input
+    }
+  };
 
   return (
     <>
@@ -90,18 +103,6 @@ export default function StartPage() {
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
-                }}
-              />
-            </FormControl>
-
-            <FormControl mt={4}>
-              <FormLabel>Email: </FormLabel>
-              <Input
-                type="email"
-                placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
                 }}
               />
             </FormControl>

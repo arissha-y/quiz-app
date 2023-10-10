@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardBody,
@@ -21,12 +21,9 @@ import {
   ModalFooter,
   useDisclosure,
   Progress,
-  Container,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
-
-// console.log(Cookies.get("name"));
 
 // id, counter for cookies
 
@@ -48,7 +45,7 @@ const questionList = [
     id: 3,
     question: "What is the official language of Brazil?",
     answers: ["Portuguese", "Italian", "French", "Spanish"],
-    correctAnswer: "Portugese",
+    correctAnswer: "Portuguese",
   },
   {
     id: 4,
@@ -104,12 +101,26 @@ const questionList = [
   },
 ];
 
+/**
+ *
+ * RUNTIME ERROR WHEN REFRESH
+ */
 const QuestionCard = () => {
-  const [quizPoints, setQuizPoint] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [quizPoints, setQuizPoint] = useState(
+    () => Number(Cookies.get("quizPoints")) || 0
+  );
+  const [currentQuestion, setCurrentQuestion] = useState(
+    () => Number(Cookies.get("currentQuestion")) || 0
+  );
   const [selectedOption, setSelectedOption] = useState("");
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // save user's progress in cookies
+  useEffect(() => {
+    Cookies.set("quizPoints", quizPoints.toString());
+    Cookies.set("currentQuestion", currentQuestion.toString());
+  }, [quizPoints, currentQuestion]);
 
   const handleNextQuestion = () => {
     const currentQuestionObject = questionList[currentQuestion];
@@ -130,7 +141,10 @@ const QuestionCard = () => {
     if (currentQuestion === questionList.length - 1) {
       router.push({
         pathname: "/ResultPage",
-        query: { quizPoints, numQuestions: questionList.length },
+        query: {
+          quizPoints: quizPoints + 1,
+          numQuestions: questionList.length,
+        },
       });
     } else {
       setCurrentQuestion((question) => question + 1);

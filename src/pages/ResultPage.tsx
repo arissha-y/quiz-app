@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const ResultPage = () => {
   const router = useRouter();
@@ -18,28 +19,13 @@ const ResultPage = () => {
     quizPoints: string;
     numQuestions: string;
   };
-  let expertiseLevel;
 
   const handleRestart = () => {
+    // reset quizPoints, numQuestions and name
+    Cookies.set("quizPoints", "0");
+    Cookies.set("currentQuestion", "0");
     router.push("/");
   };
-
-  // ADD ON: add level of expertise
-  /**
-   * Novice (0-2): Just starting, basic understanding.
-   * Intermediate (3-5): Familiar with the subject, can handle moderate complexity.
-   * Advanced (6-8): In-depth knowledge, can handle complex tasks.
-   * Expert (9-10):
-   */
-  // if (quizPoints >= "0" && quizPoints <= "2") {
-  //   expertiseLevel = "Novice";
-  // } else if (quizPoints >= "3" && quizPoints <= "5") {
-  //   expertiseLevel = "Intermediate";
-  // } else if (quizPoints >= "6" && quizPoints <= "8") {
-  //   expertiseLevel = "Advanced";
-  // } else if (quizPoints >= "9" && quizPoints <= "10") {
-  //   expertiseLevel = "Expert";
-  // }
 
   return (
     <Flex justifyContent="center" alignItems="center" minHeight="100vh">
