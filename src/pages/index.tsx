@@ -35,14 +35,17 @@ export default function StartPage() {
 
   const handleGoToQuestionCard = () => {
     if (!isError) {
-      // if name is change, reset quizpoints and currentquestion
+      /**
+       * IF NAME CHANGE IS DETECTED, RESET QUIZPOINTS AND CURRENTQUESTION
+       * IF NOT DETECTED, RESUME
+       */
       if (cookieName !== name) {
         Cookies.set("quizPoints", "0");
         Cookies.set("currentQuestion", "0");
       }
 
       Cookies.set("name", name);
-      router.push("/QuestionCard"); // Replace "/result" with the path of the result page
+      router.push("/QuestionCard");
     }
   };
 
@@ -52,14 +55,13 @@ export default function StartPage() {
     const storedCookieName = Cookies.get("name"); // already saved
 
     if (storedCookieName) {
-      setName(storedCookieName); //if value not "" show in input
+      setName(storedCookieName); //show on input
+      setCookieName(storedCookieName); //have a history what the current name's value
     }
   };
 
   return (
     <>
-      {/* main component*/}
-
       <Flex justifyContent="center" alignItems="center" minHeight="100vh">
         <Card align="center">
           <CardHeader>
@@ -89,8 +91,7 @@ export default function StartPage() {
         </Card>
       </Flex>
 
-      {/* Modal for user to input their name and email */}
-      {/* START QUIZ  -> open modal | SAVE BTN IN MODAL -> QuestionCard.tsx*/}
+      {/* MODAL FOR USER TO INPUT THEIR NAME */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
